@@ -1,0 +1,21 @@
+server:
+  port: 8110
+
+spring:
+  profiles:
+    active: dev
+  application: #服务名
+    name: service_edu
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/school_edu?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: sww533212
+  jackson: #返回json的全局时间格式
+    date-format: yyyy-MM-dd HH:mm:ss #规定日期的返回格式
+    time-zone: GMT+8 #设置时区为东八区
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #mybatis日志
+
