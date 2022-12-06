@@ -41,7 +41,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         } if (level != null) {
             teacherQueryWrapper.eq("level", level);
         } if (!StringUtils.isNullOrEmpty(joinDateBegin)) {
-            teacherQueryWrapper.ge("join date", joinDateBegin);
+            teacherQueryWrapper.ge("join_date", joinDateBegin);
         } if (!StringUtils.isNullOrEmpty(joinDateEnd)) {
             teacherQueryWrapper.le("join_date", joinDateEnd);
         }

@@ -3,6 +3,7 @@ package com.example.school.service.base.handler;
 import com.example.school.common.base.result.R;
 import com.example.school.common.base.result.ResultCodeEnum;
 import com.example.school.common.base.util.ExceptionUtils;
+import com.example.school.service.base.exception.SchoolException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -37,5 +38,13 @@ public class GlobalExceptionHandler {
         //e.printStackTrace();
         log.error(ExceptionUtils.getMessage(e));
         return R.setResult(ResultCodeEnum.JSON_PARSE_ERROR);
+    }
+
+    @ExceptionHandler(SchoolException.class)
+    @ResponseBody
+    public R error(SchoolException e) {
+        //e.printStackTrace();
+        log.error(ExceptionUtils.getMessage(e));
+        return R.error().message(e.getMessage()).code(e.getCode());
     }
 }

@@ -25,7 +25,8 @@ import java.util.List;
  * @author SWenW
  * @since 2022-11-21
  */
-@Api(description = "讲师管理")
+@CrossOrigin // 允许跨域
+@Api(tags = "讲师管理")
 @RestController
 @RequestMapping("/admin/edu/teacher")
 public class TeacherController {

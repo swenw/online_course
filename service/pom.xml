@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>service_edu</module>
+        <module>service_oss</module>
     </modules>
 
     <properties>
@@ -105,6 +106,11 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
+        </dependency>
+        <!--日期时间工具-->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
         </dependency>
 
         <dependency>
