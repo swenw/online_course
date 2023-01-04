@@ -36,6 +36,7 @@ public class FileServiceImpl implements FileService {
 
         // 创建OSSClient实例
         OSS ossClient = new OSSClientBuilder().build(endpoint, keyid, keysecret);
+        //如果不存在声明的bucket，则自己创建一个
         if (!ossClient.doesBucketExist(bucketname)) {
             ossClient.createBucket(bucketname);
             // 赋予公共读权限
@@ -55,5 +56,25 @@ public class FileServiceImpl implements FileService {
 
         // 返回url
         return "https://" + bucketname + "." + endpoint + "/" + key;
+    }
+
+    @Override
+    public void removeFile(String url) {
+        // 读取配置信息
+        String endpoint = ossProperties.getEndpoint();
+        String bucketname = ossProperties.getBucketname();
+        String keyid = ossProperties.getKeyid();
+        String keysecret = ossProperties.getKeysecret();
+
+        // 创建OSSClient实例
+        OSS ossClient = new OSSClientBuilder().build(endpoint, keyid, keysecret);
+
+        // 删除文件
+        String host = "https://" + bucketname + "." + endpoint + "/";
+        String objectName = url.substring(host.length());
+        ossClient.deleteObject(bucketname, objectName);
+
+        // 关闭OSSClient
+        ossClient.shutdown();
     }
 }

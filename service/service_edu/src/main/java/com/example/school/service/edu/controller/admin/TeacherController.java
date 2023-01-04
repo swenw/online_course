@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.school.common.base.result.R;
 import com.example.school.service.edu.entity.Teacher;
 import com.example.school.service.edu.entity.vo.TeacherQueryVo;
+import com.example.school.service.edu.feign.OssFileService;
 import com.example.school.service.edu.service.TeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,6 +35,9 @@ public class TeacherController {
     @Resource
     private TeacherService teacherService;
 
+    @Resource
+    private OssFileService ossFileService;
+
     @ApiOperation("所有讲师列表")
     @GetMapping("/list")
     public R listAll() {
@@ -43,7 +48,24 @@ public class TeacherController {
     @ApiOperation(value = "根据id删除讲师", notes = "根据id删除讲师")
     @DeleteMapping("/remove/{id}")
     public R removeById(@PathVariable String id) {
+        // 删除讲师头像
+        teacherService.removeAvatarById(id);
+
+        // 删除讲师
         boolean res = teacherService.removeById(id);
+        if (res) {
+            return R.ok().message("删除成功");
+        } else {
+            return R.error().message("数据不存在");
+        }
+    }
+
+    @ApiOperation(value = "根据id列表删除讲师", notes = "根据id删除讲师")
+    @DeleteMapping("/batch-remove")
+    public R removeRows(
+            @ApiParam(value = "讲师ID列表", required = true)
+            @RequestBody List<String> idList) {
+        boolean res = teacherService.removeByIds(idList);
         if (res) {
             return R.ok().message("删除成功");
         } else {
@@ -92,6 +114,23 @@ public class TeacherController {
         } else {
             return R.error().message("数据不存在");
         }
+    }
+
+    @ApiOperation("根据关键字查询讲师列表")
+    @GetMapping("/list/name/{key}")
+    public R selectNameListByKey(
+            @ApiParam(value = "关键字", required = true)
+            @PathVariable String key
+    ) {
+        List<Map<String, Object>> nameList = teacherService.selectNameList(key);
+        return R.ok().data("items", nameList);
+    }
+
+    @ApiOperation("测试服务调用")
+    @GetMapping("/test")
+    public R test() {
+        ossFileService.test();
+        return R.ok();
     }
 }
 

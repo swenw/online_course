@@ -26,7 +26,7 @@ public class FileController {
     private FileService fileService;
 
     @ApiOperation("文件上传")
-    @PostMapping("upload")
+    @PostMapping("/upload")
     public R upload(
             @ApiParam(value = "文件", required = true)
             @RequestParam("file")
@@ -44,5 +44,20 @@ public class FileController {
             log.error(ExceptionUtils.getMessage(e));
             throw new SchoolException(ResultCodeEnum.FILE_UPLOAD_ERROR);
         }
+    }
+
+    @ApiOperation(value = "文件删除")
+    @DeleteMapping("/remove")
+    public R removeFile(
+            @ApiParam(value = "要删除的文件url路径", required = true)
+            @RequestBody String url) {
+        fileService.removeFile(url);
+        return R.ok().message("文件删除成功");
+    }
+
+    @ApiOperation("测试Feign")
+    @GetMapping("/test")
+    public R test() {
+        return R.ok();
     }
 }
