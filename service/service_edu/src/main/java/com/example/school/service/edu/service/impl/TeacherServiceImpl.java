@@ -7,7 +7,7 @@ import com.example.school.common.base.result.R;
 import com.example.school.service.edu.entity.Teacher;
 import com.example.school.service.edu.entity.vo.TeacherQueryVo;
 import com.example.school.service.edu.feign.OssFileService;
-import com.example.school.service.edu.mapper.TeacherMapper;
+import com.example.school.service.edu.mapper.*;
 import com.example.school.service.edu.service.TeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mysql.cj.util.StringUtils;
@@ -27,6 +27,7 @@ import java.util.Map;
  */
 @Service
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements TeacherService {
+
     @Resource
     private OssFileService ossFileService;
 
