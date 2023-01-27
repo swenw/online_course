@@ -1,4 +1,4 @@
-package com.example.school.service.edu.controller;
+package com.example.school.service.edu.controller.admin;
 
 
 import com.example.school.common.base.result.R;

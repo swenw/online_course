@@ -9,6 +9,7 @@ import com.example.school.service.edu.entity.vo.CoursePublishVo;
 import com.example.school.service.edu.entity.vo.CourseQueryVo;
 import com.example.school.service.edu.entity.vo.CourseVo;
 import com.example.school.service.edu.service.CourseService;
+import com.example.school.service.edu.service.VideoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,6 +35,9 @@ import java.util.List;
 public class CourseController {
     @Resource
     private CourseService courseService;
+
+    @Resource
+    private VideoService videoService;
 
     @ApiOperation("新增课程")
     @PostMapping("/save-course-info")
@@ -90,7 +94,8 @@ public class CourseController {
     @ApiOperation("根据id删除视课程")
     @DeleteMapping("/remove/{id}")
     public R removeById(@ApiParam(value = "课程id", required = true) @PathVariable String id) {
-        // todo: 删除课程视频
+        // 删除课程视频
+        videoService.removeMediaVideoByCourseId(id);
 
         // 删除课程封面
         courseService.removeCoverById(id);

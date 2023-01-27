@@ -3,7 +3,9 @@ package com.example.school.service.edu.controller.admin;
 
 import com.example.school.common.base.result.R;
 import com.example.school.service.edu.entity.Chapter;
+import com.example.school.service.edu.entity.vo.ChapterVo;
 import com.example.school.service.edu.service.ChapterService;
+import com.example.school.service.edu.service.VideoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -28,6 +31,9 @@ import javax.annotation.Resource;
 public class ChapterController {
     @Resource
     private ChapterService chapterService;
+
+    @Resource
+    private VideoService videoService;
 
     @ApiOperation("新增章节")
     @PostMapping("save")
@@ -76,8 +82,8 @@ public class ChapterController {
             @ApiParam(value = "章节ID", required = true)
             @PathVariable String id){
 
-        //TODO 删除视频：VOD
-        //在此处调用vod中的删除视频文件的接口
+        //在此处调用vod中的删除视频文件
+        videoService.removeMediaVideoByChapterId(id);
 
         boolean result = chapterService.removeChapterById(id);
         if (result) {
@@ -85,6 +91,16 @@ public class ChapterController {
         } else {
             return R.error().message("数据不存在");
         }
+    }
+
+    @ApiOperation("嵌套章节数据列表")
+    @GetMapping("nested-list/{courseId}")
+    public R nestedListByCourseId(
+            @ApiParam(value = "课程ID", required = true)
+            @PathVariable String courseId){
+
+        List<ChapterVo> chapterVoList = chapterService.nestedList(courseId);
+        return R.ok().data("items", chapterVoList);
     }
 }
 
