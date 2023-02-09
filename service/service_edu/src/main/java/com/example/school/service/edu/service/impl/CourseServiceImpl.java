@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.school.common.base.result.R;
 import com.example.school.service.edu.entity.*;
-import com.example.school.service.edu.entity.vo.CoursePublishVo;
-import com.example.school.service.edu.entity.vo.CourseQueryVo;
-import com.example.school.service.edu.entity.vo.CourseVo;
+import com.example.school.service.edu.entity.vo.*;
 import com.example.school.service.edu.feign.OssFileService;
 import com.example.school.service.edu.mapper.*;
 import com.example.school.service.edu.service.CourseService;
@@ -183,5 +181,49 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         // updateById只会更新非null值，setStatus设置状态非null，那根据id更新时只会更新status
         course.setStatus(Course.COURSE_NORMAL);
         return this.updateById(course);
+    }
+
+    @Override
+    public List<Course> webSelectList(WebCourseQueryVo webCourseQueryVo) {
+
+        QueryWrapper<Course> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("status", Course.COURSE_NORMAL);
+
+        if (!StringUtils.isEmpty(webCourseQueryVo.getSubjectParentId())) {
+            queryWrapper.eq("subject_parent_id", webCourseQueryVo.getSubjectParentId());
+        }
+
+        if (!StringUtils.isEmpty(webCourseQueryVo.getSubjectId())) {
+            queryWrapper.eq("subject_id", webCourseQueryVo.getSubjectId());
+        }
+
+        if (!StringUtils.isEmpty(webCourseQueryVo.getBuyCountSort())) {
+            queryWrapper.orderByDesc("buy_count");
+        }
+
+        if (!StringUtils.isEmpty(webCourseQueryVo.getGmtCreateSort())) {
+            queryWrapper.orderByDesc("gmt_create");
+        }
+
+        if (!StringUtils.isEmpty(webCourseQueryVo.getPriceSort())) {
+            if(webCourseQueryVo.getType() == null || webCourseQueryVo.getType() == 1){
+                queryWrapper.orderByAsc("price");
+            }else{
+                queryWrapper.orderByDesc("price");
+            }
+        }
+
+        return baseMapper.selectList(queryWrapper);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public WebCourseVo selectWebCourseVoById(String id) {
+        //更新课程浏览数
+        Course course = baseMapper.selectById(id);
+        course.setViewCount(course.getViewCount() + 1);
+        baseMapper.updateById(course);
+        //获取课程信息
+        return baseMapper.selectWebCourseVoById(id);
     }
 }

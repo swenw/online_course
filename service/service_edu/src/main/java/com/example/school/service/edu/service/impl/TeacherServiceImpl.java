@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.school.common.base.result.R;
+import com.example.school.service.edu.entity.Course;
 import com.example.school.service.edu.entity.Teacher;
 import com.example.school.service.edu.entity.vo.TeacherQueryVo;
 import com.example.school.service.edu.feign.OssFileService;
@@ -14,6 +15,7 @@ import com.mysql.cj.util.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +32,9 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
 
     @Resource
     private OssFileService ossFileService;
+
+    @Resource
+    private CourseMapper courseMapper;
 
     @Override
     public IPage<Teacher> selectPage(Page<Teacher> teacherPage, TeacherQueryVo teacherQueryVo) {
@@ -81,5 +86,20 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
             }
         }
         return false;
+    }
+
+    @Override
+    public Map<String, Object> selectTeacherInfoById(String id) {
+        Teacher teacher = baseMapper.selectById(id);
+
+        QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
+        courseQueryWrapper.eq("teacher_id", id);
+        List<Course> courses = courseMapper.selectList(courseQueryWrapper);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("teacher", teacher);
+        map.put("courseList", courses);
+
+        return map;
     }
 }
