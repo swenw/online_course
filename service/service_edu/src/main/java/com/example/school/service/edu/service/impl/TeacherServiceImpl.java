@@ -12,6 +12,7 @@ import com.example.school.service.edu.mapper.*;
 import com.example.school.service.edu.service.TeacherService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mysql.cj.util.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -101,5 +102,14 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         map.put("courseList", courses);
 
         return map;
+    }
+
+    @Cacheable(value = "index", key = "'selectHotTeacher'")
+    @Override
+    public List<Teacher> selectHotTeacher() {
+        QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
+        teacherQueryWrapper.orderByAsc("sort");
+        teacherQueryWrapper.last("limit 4");
+        return baseMapper.selectList(teacherQueryWrapper);
     }
 }

@@ -18,6 +18,6 @@ spring:
 aliyun:
   vod:
     keyid:
-    keysecret: 
+    keysecret:
 #    templateGroupId: 你配置的转码模板组id #转码模板组id
 #    workflowId: 你配置的工作流id #工作流id

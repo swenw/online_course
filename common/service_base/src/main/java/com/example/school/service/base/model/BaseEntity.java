@@ -9,12 +9,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class BaseEntity {
+public class BaseEntity implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "讲师ID")
