@@ -6,6 +6,7 @@ import com.example.school.common.base.util.FormUtils;
 import com.example.school.common.base.util.JwtInfo;
 import com.example.school.common.base.util.JwtUtils;
 import com.example.school.common.base.util.MD5;
+import com.example.school.service.base.dto.MemberDto;
 import com.example.school.service.base.exception.SchoolException;
 import com.example.school.service.ucenter.entity.Member;
 import com.example.school.service.ucenter.entity.vo.LoginVo;
@@ -14,6 +15,7 @@ import com.example.school.service.ucenter.mapper.MemberMapper;
 import com.example.school.service.ucenter.service.MemberService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -120,5 +122,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         QueryWrapper<Member> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("openid", openid);
         return baseMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public MemberDto getMemberDtoByMemberId(String memberId) {
+
+        Member member = baseMapper.selectById(memberId);
+        MemberDto memberDto = new MemberDto();
+        BeanUtils.copyProperties(member, memberDto);
+        return memberDto;
     }
 }

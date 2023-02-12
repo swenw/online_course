@@ -1,5 +1,6 @@
 package com.example.school.service.ucenter.service;
 
+import com.example.school.service.base.dto.MemberDto;
 import com.example.school.service.ucenter.entity.Member;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.school.service.ucenter.entity.vo.LoginVo;
@@ -25,4 +26,6 @@ public interface MemberService extends IService<Member> {
      * @return
      */
     Member getByOpenid(String openid);
+
+    MemberDto getMemberDtoByMemberId(String memberId);
 }

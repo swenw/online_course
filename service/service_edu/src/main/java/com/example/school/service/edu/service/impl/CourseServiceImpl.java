@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.school.common.base.result.R;
+import com.example.school.service.base.dto.CourseDto;
 import com.example.school.service.edu.entity.*;
 import com.example.school.service.edu.entity.vo.*;
 import com.example.school.service.edu.feign.OssFileService;
@@ -235,5 +236,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         courseQueryWrapper.orderByDesc("view_count");
         courseQueryWrapper.last("limit 8");
         return baseMapper.selectList(courseQueryWrapper);
+    }
+
+    @Override
+    public CourseDto getCourseDtoById(String courseId) {
+
+        return baseMapper.selectCourseDtoById(courseId);
     }
 }

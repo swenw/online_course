@@ -1,6 +1,7 @@
 package com.example.school.service.edu.controller.api;
 
 import com.example.school.common.base.result.R;
+import com.example.school.service.base.dto.CourseDto;
 import com.example.school.service.edu.entity.Course;
 import com.example.school.service.edu.entity.vo.ChapterVo;
 import com.example.school.service.edu.entity.vo.WebCourseQueryVo;
@@ -47,5 +48,14 @@ public class ApiCourseController {
         List<ChapterVo> chapterVoList = chapterService.nestedList(courseId);
 
         return R.ok().data("course", webCourseVo).data("chapterVoList", chapterVoList);
+    }
+
+    @ApiOperation("根据课程id查询课程信息")
+    @GetMapping("inner/get-course-dto/{courseId}")
+    public CourseDto getCourseDtoById(
+            @ApiParam(value = "课程ID", required = true)
+            @PathVariable String courseId){
+        CourseDto courseDto = courseService.getCourseDtoById(courseId);
+        return courseDto;
     }
 }

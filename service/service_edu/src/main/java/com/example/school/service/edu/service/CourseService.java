@@ -1,6 +1,7 @@
 package com.example.school.service.edu.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.example.school.service.base.dto.CourseDto;
 import com.example.school.service.edu.entity.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.school.service.edu.entity.CourseInfoForm;
@@ -44,4 +45,6 @@ public interface CourseService extends IService<Course> {
     WebCourseVo selectWebCourseVoById(String id);
 
     List<Course> selectHotCourse();
+
+    CourseDto getCourseDtoById(String courseId);
 }

@@ -5,6 +5,7 @@ import com.example.school.common.base.result.R;
 import com.example.school.common.base.result.ResultCodeEnum;
 import com.example.school.common.base.util.JwtInfo;
 import com.example.school.common.base.util.JwtUtils;
+import com.example.school.service.base.dto.MemberDto;
 import com.example.school.service.base.exception.SchoolException;
 import com.example.school.service.ucenter.entity.Member;
 import com.example.school.service.ucenter.entity.vo.LoginVo;
@@ -12,6 +13,7 @@ import com.example.school.service.ucenter.entity.vo.RegisterVo;
 import com.example.school.service.ucenter.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,6 +61,15 @@ public class ApiMemberController {
             log.error("解析用户信息失败，" + e.getMessage());
             throw new SchoolException(ResultCodeEnum.FETCH_USERINFO_ERROR);
         }
+    }
+
+    @ApiOperation("根据会员id查询会员信息")
+    @GetMapping("inner/get-member-dto/{memberId}")
+    public MemberDto getMemberDtoByMemberId(
+            @ApiParam(value = "会员ID", required = true)
+            @PathVariable String memberId){
+        MemberDto memberDto = memberService.getMemberDtoByMemberId(memberId);
+        return memberDto;
     }
 }
 
