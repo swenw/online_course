@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
-@CrossOrigin
+// @CrossOrigin
 @Api(tags="课程分类")
 @RestController
 @RequestMapping("/api/edu/subject")

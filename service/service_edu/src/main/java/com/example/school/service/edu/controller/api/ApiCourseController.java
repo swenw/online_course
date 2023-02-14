@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@CrossOrigin
+// @CrossOrigin
 @Api(tags="课程")
 @RestController
 @RequestMapping("/api/edu/course")
@@ -57,5 +57,14 @@ public class ApiCourseController {
             @PathVariable String courseId){
         CourseDto courseDto = courseService.getCourseDtoById(courseId);
         return courseDto;
+    }
+
+    @ApiOperation("根据课程id更改销售量")
+    @GetMapping("inner/update-buy-count/{id}")
+    public R updateBuyCountById(
+            @ApiParam(value = "课程id", required = true)
+            @PathVariable String id){
+        courseService.updateBuyCountById(id);
+        return R.ok();
     }
 }

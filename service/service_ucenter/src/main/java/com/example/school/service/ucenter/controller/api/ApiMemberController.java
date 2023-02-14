@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2023-02-10
  */
 @Api(tags = "会员管理")
-@CrossOrigin
+// @CrossOrigin
 @RestController
 @RequestMapping("/api/ucenter/member")
 @Slf4j

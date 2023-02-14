@@ -1,6 +1,7 @@
 package com.example.school.service.trade.controller.api;
 
 import com.example.school.common.base.result.R;
+import com.example.school.common.base.result.ResultCodeEnum;
 import com.example.school.common.base.util.JwtInfo;
 import com.example.school.common.base.util.JwtUtils;
 import com.example.school.service.trade.entity.Order;
@@ -17,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/trade/order")
 @Api(tags = "网站订单管理")
-@CrossOrigin //跨域
+// @CrossOrigin //跨域
 @Slf4j
 public class ApiOrderController {
 
@@ -68,5 +69,14 @@ public class ApiOrderController {
         } else {
             return R.error().message("数据不存在");
         }
+    }
+
+    @GetMapping("/query-pay-status/{orderNo}")
+    public R queryPayStatus(@PathVariable String orderNo) {
+        boolean result = orderService.queryPayStatus(orderNo);
+        if (result) {//支付成功
+            return R.ok().message("支付成功");
+        }
+        return R.setResult(ResultCodeEnum.PAY_RUN);//支付中
     }
 }

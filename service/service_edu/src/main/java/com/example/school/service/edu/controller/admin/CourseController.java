@@ -27,7 +27,7 @@ import java.util.List;
  * @author SWenW
  * @since 2022-11-21
  */
-@CrossOrigin
+// @CrossOrigin
 @Api(tags = "课程管理")
 @RestController
 @RequestMapping("/admin/edu/course")

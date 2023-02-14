@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @Api(tags="阿里云视频点播")
-@CrossOrigin //跨域
+// @CrossOrigin //跨域
 @RestController
 @RequestMapping("/api/vod/media")
 @Slf4j

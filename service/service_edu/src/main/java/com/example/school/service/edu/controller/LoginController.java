@@ -3,7 +3,7 @@ package com.example.school.service.edu.controller;
 import com.example.school.common.base.result.R;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+// @CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class LoginController {

@@ -23,7 +23,7 @@ import java.util.List;
  * @author SWenW
  * @since 2022-11-21
  */
-@CrossOrigin
+// @CrossOrigin
 @Api(tags = "章节管理")
 @RestController
 @RequestMapping("/admin/edu/chapter")

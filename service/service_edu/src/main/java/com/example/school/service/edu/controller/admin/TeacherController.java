@@ -27,7 +27,7 @@ import java.util.Map;
  * @author SWenW
  * @since 2022-11-21
  */
-@CrossOrigin // 允许跨域
+// @CrossOrigin // 允许跨域
 @Api(tags = "讲师管理")
 @RestController
 @RequestMapping("/admin/edu/teacher")

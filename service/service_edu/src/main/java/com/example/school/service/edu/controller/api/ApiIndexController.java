@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
-@CrossOrigin //解决跨域问题
+// @CrossOrigin //解决跨域问题
 @Api(tags = "广告推荐管理")
 @RestController
 @RequestMapping("/api/edu/index")
